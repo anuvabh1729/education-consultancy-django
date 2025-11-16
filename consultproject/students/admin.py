@@ -1,3 +1,12 @@
 from django.contrib import admin
+from .models import (
+    StudentProfile,
+    StudentDocument,
+    UniversityApplication,
+    ConsultantBooking,
+)
 
-# Register your models here.
+admin.site.register(StudentProfile)
+admin.site.register(StudentDocument)
+admin.site.register(UniversityApplication)
+admin.site.register(ConsultantBooking)

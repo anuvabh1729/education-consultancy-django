@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+
+    # THIRD-PARTY
+    "channels",
+
     #your apps
     "accounts",
     "students",
@@ -85,6 +89,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "consultproject.wsgi.application"
+ASGI_APPLICATION = "consultproject.asgi.application"
+
 
 
 # Database
@@ -147,10 +153,20 @@ REST_FRAMEWORK = {
     ),
 }
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}
+
+
 
 # PayPal Settings
 PAYPAL_CLIENT_ID = "YOUR_PAYPAL_CLIENT_ID"
 PAYPAL_SECRET = "YOUR_PAYPAL_SECRET"
+
+
+OPENAI_API_KEY = "YOUR_OPENAI_KEY"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

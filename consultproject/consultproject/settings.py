@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "chatbox",
     "adminpanel",
     "api",
+    "payments",
 
 ]
 

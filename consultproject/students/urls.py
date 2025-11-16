@@ -11,4 +11,5 @@ urlpatterns = [
     path("documents/upload/", UploadDocumentView.as_view()),
     path("applications/", UniversityApplicationView.as_view()),
     path("bookings/book/", BookConsultantView.as_view()),
+    
 ]

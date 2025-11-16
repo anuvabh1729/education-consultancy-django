@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import ConsultantProfile, ConsultantSchedule
 
-# Register your models here.
+admin.site.register(ConsultantProfile)
+admin.site.register(ConsultantSchedule)

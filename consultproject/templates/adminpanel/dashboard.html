@@ -1,0 +1,75 @@
+<!-- adminpanel/templates/adminpanel/dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .card { padding: 20px; border-radius: 8px; background: #f1f1f1; margin-bottom: 20px; }
+        .title { font-size: 22px; font-weight: bold; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<h1>Admin Dashboard</h1>
+
+<div class="card">
+    <div class="title">System Statistics</div>
+    <div id="summary"></div>
+</div>
+
+<div class="card">
+    <div class="title">Payments (Last 7 Days)</div>
+    <canvas id="paymentsChart"></canvas>
+</div>
+
+<div class="card">
+    <div class="title">Document Status</div>
+    <canvas id="documentsChart"></canvas>
+</div>
+
+<div class="card">
+    <div class="title">Registrations (30 Days)</div>
+    <canvas id="registrationsChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+async function loadSummary() {
+    const res = await fetch("/adminpanel/stats/summary/");
+    const data = await res.json();
+
+    document.getElementById("summary").innerHTML = `
+        Students: ${data.students}<br>
+        Consultants: ${data.consultants}<br>
+        Total Revenue: $${data.total_revenue}<br>
+        Documents: ${JSON.stringify(data.documents)}
+    `;
+}
+
+async function loadChart(url, canvasId) {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    new Chart(document.getElementById(canvasId), {
+        type: "line",
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: "Values",
+                data: data.data,
+                borderWidth: 2
+            }]
+        }
+    });
+}
+
+loadSummary();
+loadChart("/adminpanel/stats/payments/", "paymentsChart");
+loadChart("/adminpanel/stats/documents/", "documentsChart");
+loadChart("/adminpanel/stats/registrations/", "registrationsChart");
+</script>
+
+</body>
+</html>

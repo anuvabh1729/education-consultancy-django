@@ -1,3 +1,3 @@
+# adminpanel/admin.py
 from django.contrib import admin
-
-# Register your models here.
+# No database models here, but file kept for future expansion

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import JsonResponse
@@ -7,6 +6,7 @@ from django.utils import timezone
 
 from .models import ConsultantProfile, Booking, ConsultantSchedule
 from .forms import BookingForm
+
 
 
 def consultant_list(request):
@@ -21,7 +21,7 @@ def consultant_detail(request, pk):
         form = BookingForm(request.POST, consultant=consultant)
         if form.is_valid():
             booking = form.save(commit=False)
-            # no user assignment (public site) - keep as is if not authenticated
+            # optional: attach request.user if authenticated (site is public, so it's optional)
             if request.user.is_authenticated:
                 booking.user = request.user
 
@@ -46,7 +46,11 @@ def consultant_detail(request, pk):
                     form.add_error('start_datetime', 'This time overlaps an existing booking.')
                 else:
                     weekday = start.astimezone(timezone.get_default_timezone()).strftime('%A').lower()
-                    schedules = ConsultantSchedule.objects.filter(consultant=consultant, day=weekday, is_available=True)
+                    schedules = ConsultantSchedule.objects.filter(
+                        consultant=consultant,
+                        day=weekday,
+                        is_available=True
+                    )
                     start_time = start.astimezone(timezone.get_default_timezone()).time()
                     end_time = end.astimezone(timezone.get_default_timezone()).time()
 
@@ -70,6 +74,7 @@ def consultant_detail(request, pk):
                             })
                         messages.success(request, 'Booking requested. Consultant will confirm soon.')
                         return redirect('consultants:booking_success')
+        # AJAX + invalid form -> return rendered HTML fragment
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             html = render(request, 'consultants/consultant_detail.html', {'consultant': consultant, 'form': form}).content.decode('utf-8')
             return JsonResponse({'success': False, 'html': html})
@@ -86,7 +91,7 @@ def booking_success(request):
 def delete_booking(request, pk):
     """
     Public delete: anyone may delete a booking (POST only).
-    If you prefer to restrict deletion, switch to the protected version below.
+    If you prefer to restrict deletion, implement checks here.
     """
     booking = get_object_or_404(Booking, pk=pk)
 
@@ -104,13 +109,24 @@ def my_bookings(request):
     """
     bookings = Booking.objects.all().order_by('-start_datetime')
     return render(request, 'consultants/my_bookings.html', {'bookings': bookings})
-=======
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, permissions
-from accounts.permissions import IsConsultant
-from .models import ConsultantProfile, ConsultantSchedule
-from .serializers import ConsultantProfileSerializer, ConsultantScheduleSerializer
+
+
+
+try:
+    from rest_framework.views import APIView
+    from rest_framework.response import Response
+    from rest_framework import status, permissions
+    from accounts.permissions import IsConsultant
+    from .serializers import ConsultantProfileSerializer, ConsultantScheduleSerializer
+except Exception:
+    # If DRF or serializers/permissions are missing, we still want the main site to work.
+    APIView = object  # placeholder so name exists; API endpoints will fail if used.
+    Response = None
+    status = None
+    permissions = None
+    IsConsultant = None
+    ConsultantProfileSerializer = None
+    ConsultantScheduleSerializer = None
 
 
 class ConsultantProfileView(APIView):
@@ -119,14 +135,14 @@ class ConsultantProfileView(APIView):
     def get(self, request):
         profile, _ = ConsultantProfile.objects.get_or_create(
             user=request.user,
-            defaults={"email": request.user.email or ""}
+            defaults={"email": getattr(request.user, 'email', "")}
         )
         return Response(ConsultantProfileSerializer(profile).data)
 
     def post(self, request):
         profile, _ = ConsultantProfile.objects.get_or_create(
             user=request.user,
-            defaults={"email": request.user.email or ""}
+            defaults={"email": getattr(request.user, 'email', "")}
         )
         serializer = ConsultantProfileSerializer(profile, data=request.data, partial=True)
         if serializer.is_valid():
@@ -157,4 +173,3 @@ class ConsultantScheduleListView(APIView):
             is_available=True
         )
         return Response(ConsultantScheduleSerializer(schedules, many=True).data)
->>>>>>> 9b05168f821fc26b82794dfcdc5c5ca30c3d8f75

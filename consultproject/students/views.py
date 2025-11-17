@@ -1,3 +1,5 @@
+from django.shortcuts import redirect, render
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
@@ -90,3 +92,13 @@ class BookConsultantView(APIView):
             "message": "Consultant booked successfully",
             "booking": ConsultantBookingSerializer(booking).data,
         })
+
+
+
+#updated made by Hash
+
+def student_home(request):
+
+    # student = request.user.studentprofile
+    # return render(request, "students/student_home.html", {"student": student})
+    return render(request, '/workspaces/education-consultancy-django/consultproject/templates/students/students_home.html')

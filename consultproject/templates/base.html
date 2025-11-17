@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Consultant Booking</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <nav>
+          <a href="{% url 'consultants:consultant_list' %}">Consultants</a>
+          <a href="{% url 'consultants:my_bookings' %}">My Bookings</a>
+          <a href="/admin/" style="margin-left: 12px">Admin</a>
+        </nav>
+      </header>
+
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- Modal -->
+    <div
+      id="modal-backdrop"
+      class="modal-backdrop"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div id="modal" class="modal" role="document" aria-modal="true">
+        <button id="modal-close" class="close" aria-label="Close">
+          &times;
+        </button>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+
+    <!-- Booking success toast -->
+    <div id="booking-toast" role="status" aria-live="polite">
+      Booking requested — consultant will confirm.
+    </div>
+
+    <script>
+      // helper to get CSRF token from cookie for AJAX
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+      }
+      const csrftoken = getCookie("csrftoken");
+
+      const backdrop = document.getElementById("modal-backdrop");
+      const modalBody = document.getElementById("modal-body");
+      const closeBtn = document.getElementById("modal-close");
+      const toast = document.getElementById("booking-toast");
+
+      function openModal(html) {
+        modalBody.innerHTML = html;
+        backdrop.style.display = "flex";
+        backdrop.setAttribute("aria-hidden", "false");
+        const form = modalBody.querySelector("form");
+        if (form) attachAjaxForm(form);
+        const firstInput = modalBody.querySelector(
+          "input,select,textarea,button"
+        );
+        if (firstInput) firstInput.focus();
+      }
+
+      function closeModal() {
+        backdrop.style.display = "none";
+        backdrop.setAttribute("aria-hidden", "true");
+        modalBody.innerHTML = "";
+      }
+
+      closeBtn.addEventListener("click", closeModal);
+      backdrop.addEventListener("click", function (e) {
+        if (e.target === backdrop) closeModal();
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && backdrop.style.display === "flex") {
+          closeModal();
+        }
+      });
+
+      function showToast(text, ms = 3500) {
+        toast.textContent = text;
+        toast.style.display = "block";
+        setTimeout(() => (toast.style.display = "none"), ms);
+      }
+
+      // Attach to forms loaded into modal to submit by AJAX
+      function attachAjaxForm(form) {
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const action = form.action || window.location.href;
+          const formData = new FormData(form);
+
+          fetch(action, {
+            method: "POST",
+            headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              "X-CSRFToken": csrftoken,
+            },
+            body: formData,
+            credentials: "same-origin",
+          })
+            .then(async (res) => {
+              const ct = res.headers.get("content-type") || "";
+              if (ct.includes("application/json")) {
+                const json = await res.json();
+                if (json.success) {
+                  closeModal();
+                  showToast(json.message || "Booking requested");
+                  if (json.redirect) window.location.href = json.redirect;
+                } else {
+                  if (json.html) openModal(json.html);
+                }
+              } else {
+                const html = await res.text();
+                if (
+                  html.includes('id="booking-success"') ||
+                  html.includes("Booking requested")
+                ) {
+                  closeModal();
+                  showToast("Booking requested – consultant will confirm.");
+                } else {
+                  openModal(html);
+                }
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              showToast("Request failed. Try again.");
+            });
+        });
+      }
+    </script>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

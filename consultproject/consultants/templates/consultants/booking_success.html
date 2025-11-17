@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    {% extends "base.html" %} {% block content %}
+    <div id="booking-success">
+      <h1>Booking Requested</h1>
+      <p>
+        Your booking request has been saved. The consultant will confirm soon.
+      </p>
+
+      <a href="{% url 'consultants:consultant_list' %}">Back to Consultants</a>
+    </div>
+    {% endblock %}
+  </body>
+</html>

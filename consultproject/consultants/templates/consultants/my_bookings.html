@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    {% extends "base.html" %}
+
+    {% block content %}
+    <h1>My Bookings</h1>
+
+    {% if bookings %}
+    <ul>
+        {% for booking in bookings %}
+        <li style="margin-bottom:12px;">
+            <strong>{{ booking.consultant.full_name }}</strong>
+            — {{ booking.start_datetime|date:"M d, Y H:i" }}
+
+            {% if booking.confirmed %}
+            <span style="color:green; margin-left:8px;">(confirmed)</span>
+            {% else %}
+            <span style="color:orange; margin-left:8px;">(pending)</span>
+            {% endif %}
+
+            <form method="post" action="{% url 'consultants:booking_delete' booking.pk %}"
+                style="display:inline; margin-left:12px;">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Cancel this booking?');">
+                    Cancel
+                </button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no bookings.</p>
+    {% endif %}
+    {% endblock %}
+
+
+</body>
+
+</html>

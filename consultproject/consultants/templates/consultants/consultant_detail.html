@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    {% extends "base.html" %} {% block content %}
+    <h2>{{ consultant.full_name }}</h2>
+    <p><strong>Specialization:</strong> {{ consultant.specialization }}</p>
+
+    <form
+      method="post"
+      action="{% url 'consultants:consultant_detail' consultant.pk %}"
+    >
+      {% csrf_token %}
+
+      <label>{{ form.client_name.label }}</label>
+      {{ form.client_name }}
+
+      <label>{{ form.client_email.label }}</label>
+      {{ form.client_email }}
+
+      <label>{{ form.consultation_type.label }}</label>
+      {{ form.consultation_type }}
+
+      <label>{{ form.start_datetime.label }}</label>
+      {{ form.start_datetime }}
+
+      <label>{{ form.duration_minutes.label }}</label>
+      {{ form.duration_minutes }}
+
+      <label>{{ form.notes.label }}</label>
+      {{ form.notes }} {{ form.consultant }}
+
+      <button class="primary" type="submit">Request booking</button>
+    </form>
+    {% endblock %}
+  </body>
+</html>

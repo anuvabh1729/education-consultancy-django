@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    {% extends "base.html" %} {% block content %}
+    <a class="cta">Book your consultant here</a>
+
+    <h1>Consultants</h1>
+
+    <ul class="consultant-list">
+      {% for c in consultants %}
+      <li class="consultant-row">
+        <a
+          class="consultant-name"
+          href="{% url 'consultants:consultant_detail' c.pk %}"
+          data-url="{% url 'consultants:consultant_detail' c.pk %}"
+        >
+          {{ c.full_name }}
+        </a>
+        <span class="consultant-sub"> — {{ c.specialization }}</span>
+      </li>
+      {% empty %}
+      <li>No consultants available.</li>
+      {% endfor %}
+    </ul>
+    {% endblock %} {% block scripts %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        function showLoading() {
+          return '<div class="loading">Loading consultant details…</div>';
+        }
+
+        document.querySelectorAll(".consultant-name").forEach(function (el) {
+          el.addEventListener("click", function (e) {
+            e.preventDefault();
+            const url = el.dataset.url || el.getAttribute("href");
+            const modalBody = document.getElementById("modal-body");
+            if (!modalBody) return;
+            modalBody.innerHTML = showLoading();
+            document.getElementById("modal-backdrop").style.display = "flex";
+
+            fetch(url, { credentials: "same-origin" })
+              .then(function (resp) {
+                if (!resp.ok) throw new Error("Network error");
+                return resp.text();
+              })
+              .then(function (html) {
+                modalBody.innerHTML = html;
+              })
+              .catch(function (err) {
+                modalBody.innerHTML =
+                  '<div class="loading">Failed to load — try again.</div>';
+                console.error(err);
+              });
+          });
+        });
+      });
+    </script>
+    {% endblock %}
+  </body>
+</html>

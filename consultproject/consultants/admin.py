@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import ConsultantProfile, ConsultantSchedule, Booking
 
 @admin.register(ConsultantProfile)
@@ -17,3 +18,9 @@ class BookingAdmin(admin.ModelAdmin):
     list_display = ('consultant', 'client_name', 'start_datetime', 'end_datetime', 'duration_minutes', 'confirmed')
     list_filter = ('consultant', 'confirmed')
     search_fields = ('client_name', 'client_email', 'consultant__full_name')
+
+from .models import ConsultantProfile, ConsultantSchedule
+
+admin.site.register(ConsultantProfile)
+admin.site.register(ConsultantSchedule)
+

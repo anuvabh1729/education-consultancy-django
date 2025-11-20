@@ -1,0 +1,67 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Upload Documents{% endblock %}
+
+{% block content %}
+
+<style>
+.doc-card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+}
+.doc-card:hover {
+    background: rgba(255,255,255,0.25);
+}
+</style>
+
+<div class="container text-white">
+
+    <h2 class="mb-4">Upload Your Documents</h2>
+
+    <div class="row">
+
+        <!-- Upload Form -->
+        <div class="col-md-5">
+            <div class="doc-card">
+                <h4>Upload New Document</h4>
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <button class="btn btn-primary mt-2">Upload</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Show Uploaded Documents -->
+        <div class="col-md-7">
+            <div class="doc-card">
+                <h4>Your Uploaded Documents</h4>
+
+                {% if documents %}
+                    <ul class="list-group mt-3">
+                        {% for doc in documents %}
+                            <li class="list-group-item bg-dark text-white">
+                                <i class="fa fa-file"></i>
+                                {{ doc.document_name }}
+
+                                <a href="{{ doc.file.url }}" target="_blank"
+                                   class="btn btn-sm btn-outline-light float-end">Open</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="mt-2">No documents uploaded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

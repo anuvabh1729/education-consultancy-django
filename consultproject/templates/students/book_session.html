@@ -1,0 +1,25 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Book Session{% endblock %}
+
+{% block content %}
+<div class="container text-white">
+
+    <h2>Book Counselling with {{ consultant.username }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <label class="mt-3">Select Date:</label>
+        <input type="date" name="date" class="form-control" required>
+
+        <label class="mt-3">Select Time:</label>
+        <input type="time" name="time" class="form-control" required>
+
+        <label class="mt-3">Message (optional):</label>
+        <textarea name="message" class="form-control" rows="3"></textarea>
+
+        <button class="btn btn-success mt-4">Confirm Booking</button>
+    </form>
+
+</div>
+{% endblock %}

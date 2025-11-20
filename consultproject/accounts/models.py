@@ -34,8 +34,16 @@ class User(AbstractUser):
     google_id = models.CharField(max_length=255, blank=True, null=True)
 
     objects = UserManager()
-
+    
     REQUIRED_FIELDS = []  # only username required
-
+    
+    
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
-        return f"{self.username} ({self.role})"
+        return f"{self.name} - {self.subject}"

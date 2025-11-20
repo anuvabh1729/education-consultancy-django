@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <a class="navbar-brand" href="/">UniYatra</a>
+
+    <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link active" href="/">{% block home_active %}{% endblock %} Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/services/">Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about/">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contact/">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="/feedback/">Feedback</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center nav-auth">
+
+            <div class="search-box me-4">
+                <input type="text" placeholder="Search">
+            </div>
+
+            {% if request.user.is_authenticated %}
+            <!-- Profile dropdown -->
+            <div class="dropdown">
+                <a class="dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                    style="font-size:18px;">
+                    <i class="fa fa-user-circle"></i> {{ request.user.username }}
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="/students/profile/"><i class="fa fa-id-card"></i> My Profile</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit Profile</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa fa-file"></i> My Applications</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger" href="/logout/"><i class="fa fa-sign-out-alt"></i>
+                            Logout</a></li>
+                </ul>
+            </div>
+
+            {% else %}
+            <!-- Login / Signup when user NOT logged in -->
+            <a href="/login/" class="login-btn me-3 text-white">
+                <i class="fa fa-sign-in-alt"></i> Login
+            </a>
+
+            <a href="/signup/" class="signup-btn text-white ms-3">
+                <i class="fa fa-user-plus"></i> Sign Up
+            </a>
+            {% endif %}
+
+        </div>
+
+    </div>
+</nav>

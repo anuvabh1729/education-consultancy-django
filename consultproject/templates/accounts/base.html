@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniYatra - {% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Custom CSS (from welcome.html) -->
+    <style>
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        color: #fff;
+        background-color: #1b262c;
+    }
+
+    .navbar-custom {
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        padding: 15px 40px;
+        position: relative;
+        z-index: 2000 !important;
+    }
+
+    .navbar-brand {
+        font-size: 26px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 1px;
+    }
+
+    .navbar-nav .nav-link {
+        color: #ddd !important;
+        font-size: 16px;
+        margin-left: 20px;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #ffffff !important;
+    }
+
+    .search-box input {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 20px;
+        padding: 6px 12px;
+        color: #fff;
+    }
+
+    .search-box input::placeholder {
+        color: #dedede;
+    }
+
+    .nav-auth a {
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 15px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .nav-auth a.login-btn {
+        color: #fff;
+        border: 1px solid #bbe1fa;
+    }
+
+    .nav-auth a.login-btn:hover {
+        background: #bbe1fa;
+        color: #0f4c75;
+    }
+
+    .nav-auth a.signup-btn {
+        background: #3282b8;
+        color: #fff;
+        border: none;
+    }
+
+    .nav-auth a.signup-btn:hover {
+        background: #0f4c75;
+        color: #fff;
+    }
+
+    .navbar-collapse {
+        z-index: 2000 !important;
+    }
+
+    .card {
+        position: relative;
+        z-index: 1;
+    }
+
+    .card,
+    .btn {
+        position: relative;
+        z-index: 5 !important;
+    }
+</style>
+
+</head>
+
+<body>
+
+    {% include 'accounts/navbar.html' %}
+
+    <div style="margin-top:100px;">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

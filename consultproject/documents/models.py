@@ -11,7 +11,7 @@ class StudentDocument(models.Model):
         ("rejected", "Rejected"),
     )
 
-    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE,related_name="documents")
     document_type = models.CharField(max_length=100)
     file = models.FileField(upload_to="documents/")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")

@@ -1,0 +1,48 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Complete Profile{% endblock %}
+
+{% block content %}
+<style>
+    .form-card {
+        background: #0f4c75;
+        width: 60%;
+        margin: auto;
+        padding: 30px;
+        border-radius: 20px;
+        color: white;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    input, select {
+        background: #3282b8 !important;
+        color: white !important;
+        border: none !important;
+    }
+</style>
+
+<div class="form-card">
+    <h2 class="text-center mb-4">Complete Your Profile</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Full Name</label>
+        <input type="text" class="form-control mb-3" name="full_name" required>
+
+        <label>Phone Number</label>
+        <input type="text" class="form-control mb-3" name="phone" required>
+
+        <label>Date of Birth</label>
+        <input type="date" class="form-control mb-3" name="dob" required>
+
+        <label>Preferred Country</label>
+        <input type="text" class="form-control mb-3" name="country" required>
+
+        <label>Preferred Course</label>
+        <input type="text" class="form-control mb-3" name="course" required>
+
+        <button class="btn btn-light w-100">Save Information</button>
+    </form>
+</div>
+
+{% endblock %}

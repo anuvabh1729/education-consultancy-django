@@ -1,0 +1,91 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Services{% endblock %}
+
+{% block content %}
+
+<style>
+    .services-section {
+        padding: 60px 0;
+        color: #fff;
+    }
+    .services-title {
+        text-align: center;
+        font-size: 40px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    .services-subtitle {
+        text-align: center;
+        font-size: 18px;
+        opacity: 0.8;
+        margin-bottom: 50px;
+    }
+    .service-card {
+        background: #0f4c75;
+        padding: 25px;
+        border-radius: 15px;
+        height: 100%;
+        transition: 0.3s ease;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    .service-card:hover {
+        transform: translateY(-6px);
+        background: #3282b8;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .service-card i {
+        font-size: 40px;
+        margin-bottom: 20px;
+        color: #bbe1fa;
+    }
+    .service-card h4 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .service-card p {
+        opacity: 0.85;
+        font-size: 15px;
+    }
+</style>
+
+<div class="container services-section">
+
+    <h1 class="services-title">Our Services</h1>
+    <p class="services-subtitle">
+        UniYatra offers end-to-end education consultancy services  
+        to make your study-abroad journey easier, faster, and stress-free.
+    </p>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="service-card">
+                <i class="fa fa-university"></i>
+                <h4>University Selection</h4>
+                <p>Personalized counseling to help you choose the best university.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="service-card">
+                <i class="fa fa-file-lines"></i>
+                <h4>Application Assistance</h4>
+                <p>Guidance with documentation, SOPs, LORs, and applications.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="service-card">
+                <i class="fa fa-passport"></i>
+                <h4>Consultant Support</h4>
+                <p>Get personalized mentorship from certified education advisors.</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

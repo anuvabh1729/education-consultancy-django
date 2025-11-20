@@ -1,0 +1,28 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Programs Offered{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-white">
+
+    <h1 class="mb-4">Programs Offered</h1>
+    <p class="text-light opacity-75">Explore the programs available for this university.</p>
+
+    <div class="row">
+
+        {% for program in programs %}
+        <div class="col-md-4">
+            <div class="p-3 mb-4 rounded shadow" style="background:#0f4c75;">
+                <h5>{{ program }}</h5>
+
+                <a href="#" class="btn btn-sm btn-outline-light mt-2">
+                    Apply Now
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}

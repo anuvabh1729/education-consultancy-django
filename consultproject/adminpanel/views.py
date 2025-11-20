@@ -64,3 +64,6 @@ class RegistrationChartAPI(APIView):
         data = [item["count"] for item in trends]
 
         return Response(ChartSerializer({"labels": labels, "data": data}).data)
+    
+def admin_dashboard(request):
+    return render(request, 'adminpanel/dashboard.html')

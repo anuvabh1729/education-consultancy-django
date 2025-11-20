@@ -1,0 +1,161 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+
+<style>
+    .contact-section {
+        padding: 50px 0;
+        color: #fff;
+    }
+
+    .contact-title {
+        text-align: center;
+        font-size: 40px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .contact-subtitle {
+        text-align: center;
+        font-size: 18px;
+        opacity: 0.8;
+        margin-bottom: 50px;
+    }
+
+    .contact-box {
+        background: #0f4c75;
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        transition: 0.3s ease;
+    }
+
+    .contact-box:hover {
+        background: #3282b8;
+        transform: translateY(-4px);
+    }
+
+    .contact-info i {
+        font-size: 26px;
+        color: #bbe1fa;
+        margin-right: 15px;
+    }
+
+    .contact-info div {
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    .form-control {
+        background: rgba(255,255,255,0.15);
+        border: none;
+        color: #fff;
+        border-radius: 10px;
+    }
+
+    .form-control:focus {
+        background: rgba(255,255,255,0.25);
+        color: #fff;
+        outline: none;
+        box-shadow: none;
+    }
+
+    .contact-btn {
+        background: #3282b8;
+        color: #fff;
+        border: none;
+        font-weight: 600;
+        padding: 12px 25px;
+        border-radius: 15px;
+        margin-top: 10px;
+    }
+
+    .contact-btn:hover {
+        background: #0f4c75;
+    }
+</style>
+
+<div class="container contact-section">
+
+    <h1 class="contact-title">Contact Us</h1>
+    <p class="contact-subtitle">
+        We're here to help you on your study abroad journey. Feel free to reach out anytime!
+    </p>
+
+    <div class="row g-4">
+
+        <!-- Contact Info Box -->
+        <div class="col-md-5">
+            <div class="contact-box contact-info">
+
+                <div>
+                    <i class="fa fa-envelope"></i>
+                    <strong>Email:</strong> support@uniyatra.com
+                </div>
+
+                <div>
+                    <i class="fa fa-phone"></i>
+                    <strong>Phone:</strong> +91 98765 43210
+                </div>
+
+                <div>
+                    <i class="fa fa-location-dot"></i>
+                    <strong>Address:</strong> Bengaluru, India
+                </div>
+
+                <div>
+                    <i class="fa fa-clock"></i>
+                    <strong>Working Hours:</strong> Mon–Sat, 10 AM – 7 PM
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="col-md-7">
+            <div class="contact-box">
+                <h4 class="mb-3">Send Us a Message</h4>
+
+                <form onsubmit="showSuccess(event)" method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <input type="text" class="form-control"  name="name" placeholder="Your Name">
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="email" class="form-control" name="email" placeholder="Your Email">
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="subject" placeholder="Subject">
+                    </div>
+
+                    <div class="mb-3">
+                        <textarea class="form-control" name="message" rows="4" placeholder="Your Message"></textarea>
+                    </div>
+
+                    <button type="submit" class="contact-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function showSuccess(event) {
+    event.preventDefault();  // Stop page refresh
+
+    alert("Message sent successfully!");
+
+    // Optional: Clear form fields
+    document.querySelector("form").reset();
+}
+</script>
+
+
+{% endblock %}

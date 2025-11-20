@@ -1,0 +1,33 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-white">
+    
+    <h2>Edit Profile</h2>
+    <p class="text-muted">Update your personal information</p>
+
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+            {% if info.profile_picture %}
+                <img src="{{ info.profile_picture.url }}" class="img-fluid rounded-3 shadow">
+            {% else %}
+                <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png"
+                     class="img-fluid rounded-3 shadow">
+            {% endif %}
+        </div>
+
+        <div class="col-md-8">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary">Save Changes</button>
+                <a href="/students/profile/" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

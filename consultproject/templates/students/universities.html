@@ -1,0 +1,43 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Explore Universities{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4 text-white">
+
+    <h2 class="mb-4">Explore Top Private Universities</h2>
+
+    <div class="row">
+        {% for uni in universities %}
+        <div class="col-md-6 col-lg-4 mb-4">
+
+            <div class="card shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                <!-- University Image -->
+                <img src="{{ uni.image }}" class="card-img-top" style="height: 180px; width: 100%; object-fit: cover;">
+
+                <div class="card-body bg-dark text-white">
+
+                    <!-- University Name -->
+                    <h5 class="card-title fw-bold">{{ uni.name }}</h5>
+
+                    <!-- Country -->
+                    <p class="text-info mb-1">{{ uni.country }}</p>
+
+                    <!-- Description -->
+                    <p class="card-text" style="font-size: 14px; opacity: 0.9;">
+                        {{ uni.desc }}
+                    </p>
+
+                    <!-- View Programs Button -->
+                    <a href="/students/universities/1/programs/" class="btn btn-primary mt-3">View Programs</a>
+                    
+
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

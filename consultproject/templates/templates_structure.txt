@@ -1,0 +1,35 @@
+templates/
+   accounts/
+      login.html
+      register_student.html
+      register_consultant.html
+
+   students/
+      dashboard.html
+      profile.html
+      documents_upload.html
+      applications.html
+      bookings.html
+
+   consultants/
+      dashboard.html
+      profile.html
+      schedule.html
+      bookings.html
+      chat.html
+
+   documents/
+      list.html
+      review.html
+
+   chatbox/
+      chat_room.html
+      ai_chat.html
+
+   payments/
+      payment_page.html
+      payment_success.html
+      invoice.html
+
+   adminpanel/
+      dashboard.html

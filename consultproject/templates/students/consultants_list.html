@@ -1,0 +1,27 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Consultants{% endblock %}
+
+{% block content %}
+<div class="container text-white">
+
+    <h2 class="mb-4">Available Consultants</h2>
+
+    <div class="row">
+        {% for c in consultants %}
+        <div class="col-md-4">
+            <div class="card bg-dark text-white p-3 mb-4">
+
+                <h4>{{ c.username }}</h4>
+                <p>Expert Consultant</p>
+
+                <a href="/students/book-session/{{ c.id }}/" class="btn btn-primary">
+                    Book Counselling
+                </a>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

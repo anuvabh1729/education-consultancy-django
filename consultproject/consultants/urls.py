@@ -15,9 +15,6 @@ urlpatterns = [
     # Web pages
     path('', views.consultant_list, name='consultant_list'),
     path('<int:pk>/', views.consultant_detail, name='consultant_detail'),
-    path('success/', views.booking_success, name='booking_success'),
-    path('booking/<int:pk>/delete/', views.delete_booking, name='booking_delete'),
-    path('my-bookings/', views.my_bookings, name='my_bookings'),
 
     # API endpoints (prefix these if you want an 'api/' namespace)
     path('api/profile/', ConsultantProfileView.as_view(), name='api_profile'),

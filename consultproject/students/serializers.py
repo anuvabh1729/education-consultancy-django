@@ -3,7 +3,6 @@ from .models import (
     StudentProfile,
     StudentDocument,
     UniversityApplication,
-    ConsultantBooking,
 )
 from consultants.models import ConsultantProfile, ConsultantSchedule
 
@@ -28,9 +27,3 @@ class UniversityApplicationSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ("student", "status")
 
-
-class ConsultantBookingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ConsultantBooking
-        fields = "__all__"
-        read_only_fields = ("student", "status")

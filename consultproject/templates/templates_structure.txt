@@ -9,13 +9,12 @@ templates/
       profile.html
       documents_upload.html
       applications.html
-      bookings.html
+      
 
    consultants/
       dashboard.html
       profile.html
       schedule.html
-      bookings.html
       chat.html
 
    documents/

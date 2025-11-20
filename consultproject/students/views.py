@@ -9,7 +9,6 @@ from .models import (
     StudentProfile,
     StudentDocument,
     UniversityApplication,
-    ConsultantBooking,
     StudentInfo,
     CounsellingSession,
 )
@@ -19,7 +18,6 @@ from .serializers import (
     StudentProfileSerializer,
     StudentDocumentSerializer,
     UniversityApplicationSerializer,
-    ConsultantBookingSerializer,
 )
 
 
@@ -81,20 +79,10 @@ class BookConsultantView(APIView):
         consultant = ConsultantProfile.objects.get(id=consultant_id)
         schedule = ConsultantSchedule.objects.get(id=schedule_id)
 
-        if not schedule.is_available:
-            return Response({"error": "Schedule not available"}, status=400)
-
-        booking = ConsultantBooking.objects.create(
-            student=student,
-            consultant=consultant,
-            schedule=schedule
-        )
-        schedule.is_available = False
-        schedule.save()
 
         return Response({
             "message": "Consultant booked successfully",
-            "booking": ConsultantBookingSerializer(booking).data,
+            
         })
 
 

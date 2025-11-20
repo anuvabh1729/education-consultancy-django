@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from consultants.models import ConsultantProfile, ConsultantSchedule
 from accounts.models import User
 
 class StudentProfile(models.Model):
@@ -23,23 +22,6 @@ class StudentProfile(models.Model):
         return self.full_name
 
 
-# class StudentDocument(models.Model):
-#     STATUS_CHOICES = (
-#         ("pending", "Pending"),
-#         ("verified", "Verified"),
-#         ("rejected", "Rejected"),
-#     )
-
-#     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
-#     document_type = models.CharField(max_length=100)
-#     file = models.FileField(upload_to="student_documents/")
-#     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
-
-#     upload_date = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return f"{self.document_type} - {self.student.full_name}"
-
 
 class UniversityApplication(models.Model):
     STATUS_CHOICES = (
@@ -59,19 +41,6 @@ class UniversityApplication(models.Model):
     def __str__(self):
         return f"{self.university_name} ({self.student.full_name})"
 
-
-class ConsultantBooking(models.Model):
-    STATUS_CHOICES = (
-        ("pending", "Pending"),
-        ("confirmed", "Confirmed"),
-        ("cancelled", "Cancelled"),
-    )
-
-    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
-    consultant = models.ForeignKey(ConsultantProfile, on_delete=models.CASCADE)
-    schedule = models.ForeignKey(ConsultantSchedule, on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
-    booked_at = models.DateTimeField(auto_now_add=True)
 
 
 class StudentInfo(models.Model):

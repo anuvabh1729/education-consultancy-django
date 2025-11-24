@@ -17,3 +17,7 @@ static/
 
 # OS Files
 .DS_Store
+
+.venv/
+venv/
+env/
